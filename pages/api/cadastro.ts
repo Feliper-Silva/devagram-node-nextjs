@@ -42,6 +42,7 @@ const handler = nc()
             .status(400)
             .json({ error: "Já existe uma conta com email informado!" });
         }
+
         //enviar a imagem do multer para o cosmic
 
         const image = await uploadImagemCosmic(req);
@@ -55,10 +56,8 @@ const handler = nc()
         };
         await usuarioModel.create(usuarioASerSalvo);
         return res.status(200).json({ msg: " usuário criado com sucesso!" });
-      } catch (error) {
-        return res
-          .status(500)
-          .json({ error: " Não foi possível cadastrar o usuário" });
+      } catch (e: any) {
+        return res.status(400).json({ error: e.toString() });
       }
     }
   );
