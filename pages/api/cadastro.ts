@@ -6,47 +6,67 @@ import { conectarMongoDB } from "../../src/middlewares/conectarMongoDB";
 
 import md5 from "md5";
 
-const endpointCadastro = async (
-  req: NextApiRequest,
-  res: NextApiResponse<RespostasPadraoMsg>
-) => {
-  if (req.method === "POST") {
-    const usuario = req.body as CadastroRequisicao;
+import {
+  upload,
+  uploadImagemCosmic
+} from "../../src/services/uploadImagemCosmic";
+import nc from "next-connect";
 
-    if (!usuario.nome || usuario.nome.length < 2) {
-      return res.status(400).json({ error: "Nome inválido" });
-    }
-    if (
-      !usuario.email ||
-      usuario.email.length < 5 ||
-      !usuario.email.includes("@") ||
-      !usuario.email.includes(".")
-    ) {
-      return res.status(400).json({ error: "Email inválido" });
-    }
-    if (!usuario.senha || usuario.senha.length < 4) {
-      return res.status(400).json({ error: "senha inválida" });
-    }
-    //válidação
-    const usuarioComMesmoEmail = await usuarioModel.find({
-      email: usuario.email
-    });
-    if (usuarioComMesmoEmail && usuarioComMesmoEmail.length > 0) {
-      return res
-        .status(400)
-        .json({ error: "Já existe uma conta com email informado!" });
-    }
+const handler = nc()
+  .use(upload.single("file"))
+  .post(
+    async (req: NextApiRequest, res: NextApiResponse<RespostasPadraoMsg>) => {
+      try {
+        const usuario = req.body as CadastroRequisicao;
 
-    //salvar no banco de dados
-    const usuarioASerSalvo = {
-      nome: usuario.nome,
-      email: usuario.email,
-      senha: md5(usuario.senha)
-    };
-    await usuarioModel.create(usuarioASerSalvo);
-    return res.status(200).json({ msg: " usuário criado com sucesso!" });
+        if (!usuario.nome || usuario.nome.length < 2) {
+          return res.status(400).json({ error: "Nome inválido" });
+        }
+        if (
+          !usuario.email ||
+          usuario.email.length < 5 ||
+          !usuario.email.includes("@") ||
+          !usuario.email.includes(".")
+        ) {
+          return res.status(400).json({ error: "Email inválido" });
+        }
+        if (!usuario.senha || usuario.senha.length < 4) {
+          return res.status(400).json({ error: "senha inválida" });
+        }
+        //validação
+        const usuarioComMesmoEmail = await usuarioModel.find({
+          email: usuario.email
+        });
+        if (usuarioComMesmoEmail && usuarioComMesmoEmail.length > 0) {
+          return res
+            .status(400)
+            .json({ error: "Já existe uma conta com email informado!" });
+        }
+        //enviar a imagem do multer para o cosmic
+
+        const image = await uploadImagemCosmic(req);
+
+        //salvar no banco de dados
+        const usuarioASerSalvo = {
+          nome: usuario.nome,
+          email: usuario.email,
+          senha: md5(usuario.senha),
+          avatar: image?.media?.url
+        };
+        await usuarioModel.create(usuarioASerSalvo);
+        return res.status(200).json({ msg: " usuário criado com sucesso!" });
+      } catch (error) {
+        return res
+          .status(500)
+          .json({ error: " Não foi possível cadastrar o usuário" });
+      }
+    }
+  );
+
+export const config = {
+  api: {
+    bodyParser: false
   }
-  return res.status(405).json({ error: "Método informado não e válido" });
 };
 
-export default conectarMongoDB(endpointCadastro);
+export default conectarMongoDB(handler);
