@@ -18,8 +18,10 @@ Devagram é uma plataforma para promover a interação e compartilhamento de pub
 
 ## :rocket: Como executar
 
-Clone o repositório
-
+```sh
+# Clone o repositório
+git clone https://github.com/Feliper-Silva/devagram-node-nextjs.git
+```
 ```sh
 # baixar dependências
 npm install
