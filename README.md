@@ -6,6 +6,7 @@
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
+- <a href="nextjs.org">Next.js</a>
 - [Next.Js](nextjs.org)
 - [Node.js](nodejs.org)
 - [Typescript](https://www.typescriptlang.org/)
