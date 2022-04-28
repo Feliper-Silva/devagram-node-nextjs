@@ -1,3 +1,4 @@
+import { politicaCORS } from './../../src/middlewares/politicaCORS';
 import { publicacaoModel } from "./../../src/models/publicacaoModel";
 import { usuarioModel } from "./../../src/models/usuarioModel";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -70,4 +71,4 @@ const feedEndpoint = async (
   return res.status(400).json({ error: "Não foi possível obter o feed!" });
 };
 
-export default validarTokenJWT(conectarMongoDB(feedEndpoint));
+export default politicaCORS(validarTokenJWT(conectarMongoDB(feedEndpoint)));

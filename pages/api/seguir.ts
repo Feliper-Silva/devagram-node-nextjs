@@ -1,3 +1,4 @@
+import { politicaCORS } from "./../../src/middlewares/politicaCORS";
 import { seguidorModel } from "./../../src/models/seguidorModel";
 import { usuarioModel } from "../../src/models/usuarioModel";
 import { conectarMongoDB } from "../../src/middlewares/conectarMongoDB";
@@ -79,4 +80,4 @@ const seguirEndpoint = async (
   }
 };
 
-export default validarTokenJWT(conectarMongoDB(seguirEndpoint));
+export default politicaCORS(validarTokenJWT(conectarMongoDB(seguirEndpoint)));

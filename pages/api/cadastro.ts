@@ -11,6 +11,7 @@ import {
   uploadImagemCosmic
 } from "../../src/services/uploadImagemCosmic";
 import nc from "next-connect";
+import { politicaCORS } from "../../src/middlewares/politicaCORS";
 
 const handler = nc()
   .use(upload.single("file"))
@@ -68,4 +69,4 @@ export const config = {
   }
 };
 
-export default conectarMongoDB(handler);
+export default politicaCORS(conectarMongoDB(handler));
