@@ -31,6 +31,7 @@ npm install
 ```
 
 Crie as chaves no arquivo .env e insira os dados necessários
+
 Verificar conexão no mongodb e no Cosmic
 ```sh
 # iniciar a aplicação.
