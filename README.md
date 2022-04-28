@@ -1,5 +1,7 @@
 <h1 align="center">Devagram</h1>
 
+<img src="./.github/Preview.svg" />
+
 ## :sparkles: Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
