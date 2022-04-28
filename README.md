@@ -13,6 +13,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Cosmic](https://www.cosmicjs.com/)
 - [Multer](https://www.npmjs.com/package/multer)
 - [MongoDB](https://www.mongodb.com/)
+- [CORS](https://www.npmjs.com/package/nextjs-cors)
 
 ## :computer: Projeto
 
