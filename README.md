@@ -6,9 +6,8 @@
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-- <a href="nextjs.org">Next.js</a>
-- [Next.Js](nextjs.org)
-- [Node.js](nodejs.org)
+- [Next.Js](https://nextjs.org)
+- [Node.js](https://nodejs.org)
 - [Typescript](https://www.typescriptlang.org/)
 - [JSONWebToken](https://jwt.io/)
 - [Cosmic](https://www.cosmicjs.com/)
