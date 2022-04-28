@@ -22,7 +22,7 @@ const handler = nc()
       if (!usuario) {
         return res.status(400).json({ error: "Usuário não encontrado!" });
       }
-      
+
       if (!req || !req.body) {
         return res
           .status(400)
@@ -44,6 +44,9 @@ const handler = nc()
         foto: image.media.url,
         data: new Date()
       };
+
+      usuario.publicacoes++;
+      await usuarioModel.findByIdAndUpdate({ _id: usuario._id }, usuario);
 
       await publicacaoModel.create(publicacao);
 
